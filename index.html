@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李雅洁 · 北辰实习作品集 · AI 作品集</title>
+  <!-- 字体走飞书镜像，避免直连外源 -->
+  <link rel="preconnect" href="https://miaoda.feishu.cn">
+  <link href="https://miaoda.feishu.cn/fonts/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Caveat:wght@400;700&family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* === CSS变量：esther 三色 · 米色系定制（胡桃棕60 / 赭金30 / 橄榄10） === */
+    :root { --_esther-ds: "esthersjw-v1";
+      --blue: #7A5A3A;        /* 主 · 胡桃棕 */
+      --blue-deep: #5C4326;   /* 主深 · 焙烤棕 */
+      --yellow: #C9973F;       /* 强调 · 赭金 */
+      --yellow-soft: #F3E4C6;  /* 赭金淡底 */
+      --red: #7C8A68;          /* 点缀 · 橄榄 */
+      --gold: #E0C068;        /* 荣誉金 · 备用点缀 */
+      --cream: #F2EEE6;       /* 米纸 · 页面底 */
+      --cream-dark: #EAE3D4;  /* 燕麦 · 交替底 */
+      --card: #FBF7EE;        /* 卡片 · 暖白 */
+      --ink: #292626;
+      --ink-light: #4E4740;
+      --ink-faint: #8F867C;
+      --dark-panel: #3E332A;  /* 深棕面板 */
+      --serif: 'Noto Serif SC', 'Songti SC', serif;
+      --disp: 'Fraunces', 'Noto Serif SC', serif;
+      --sans: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    /* === Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--gold); color: var(--ink); }
+
+    img { display: block; max-width: 100%; }
+    a { color: var(--blue); text-decoration: none; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 48px);
+    }
+
+    /* === 顶部导航（组件9） === */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 4vw, 48px);
+      background: rgba(242, 238, 230, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(41, 38, 38, 0.10);
+    }
+    .topnav .nm {
+      font-family: var(--serif); font-weight: 900; font-size: 15px; letter-spacing: 0.14em; color: var(--ink);
+    }
+    .topnav .nm small {
+      font-family: var(--sans); font-weight: 500; color: var(--ink-faint);
+      letter-spacing: 0.24em; margin-left: 10px; font-size: 10px;
+    }
+    .topnav nav { display: flex; gap: 4px; }
+    .topnav nav a {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.12em;
+      color: var(--ink-light); padding: 6px 12px; border-radius: 999px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .topnav nav a:hover { background: var(--yellow-soft); color: var(--blue-deep); }
+
+    /* === 小标签（组件：chip） === */
+    .label-caps {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em;
+      font-weight: 500; color: var(--ink-faint); display: block; margin-bottom: 0.75rem;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.02em;
+      background: var(--card); color: var(--ink-light);
+      border: 1px solid rgba(41, 38, 38, 0.16);
+      padding: 4px 12px; border-radius: 999px; white-space: nowrap;
+    }
+    .chip--gold { border-color: rgba(201, 151, 63, 0.55); color: var(--blue-deep); background: var(--yellow-soft); }
+    .chip--olive { border-color: rgba(124, 138, 104, 0.6); color: #57634A; background: rgba(124, 138, 104, 0.10); }
+    .chip--wip { border-style: dashed; color: #8A6D00; background: rgba(224, 192, 104, 0.14); }
+    .tagrow { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* === 按钮（组件18 CTA） === */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 14px; letter-spacing: 0.02em;
+      padding: 12px 22px; border-radius: 12px;
+      background: var(--blue); color: var(--cream);
+      box-shadow: 0 10px 24px -12px rgba(122, 90, 58, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -12px rgba(122, 90, 58, 0.7); }
+    .btn--paper { background: var(--card); color: var(--ink); border: 1.5px solid rgba(41, 38, 38, 0.35); box-shadow: none; }
+    .btn--paper:hover { border-color: var(--blue); color: var(--blue-deep); }
+
+    /* === 图片相框 === */
+    .photo {
+      background: var(--card); padding: 10px 10px 12px;
+      border: 1px solid rgba(41, 38, 38, 0.08);
+      box-shadow: 0 24px 48px -24px rgba(41, 38, 38, 0.35);
+      border-radius: 6px;
+    }
+    .photo img { width: 100%; object-fit: cover; border-radius: 2px; }
+    .photo figcaption {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      color: var(--ink-faint); text-align: center; padding-top: 8px;
+    }
+
+    /* === 区块骨架（组件2 Section Header） === */
+    .section { position: relative; padding: clamp(72px, 10vh, 130px) 0; }
+    .section--alt { background: var(--cream-dark); }
+    .section-header { margin-bottom: clamp(36px, 5vw, 64px); position: relative; z-index: 2; }
+    .section-number {
+      font-family: var(--disp); font-style: italic; font-weight: 400;
+      font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+      color: var(--yellow); opacity: 0.85; display: block; margin-bottom: 0.35rem;
+    }
+    .section-title {
+      font-family: var(--serif); font-weight: 900;
+      font-size: clamp(1.6rem, 3.4vw, 2.4rem); line-height: 1.25; color: var(--ink);
+    }
+    .section-sub { margin-top: 10px; font-size: 0.92rem; color: var(--ink-light); }
+    /* 大装饰数字（P1：背景透明大字） */
+    .deco-num {
+      position: absolute; top: clamp(12px, 3vw, 40px); right: clamp(8px, 4vw, 60px);
+      font-family: var(--disp); font-style: italic; font-weight: 400;
+      font-size: clamp(5rem, 14vw, 11rem); line-height: 1;
+      color: var(--blue); opacity: 0.07; pointer-events: none; user-select: none; z-index: 1;
+    }
+
+    /* === 卡片（组件1A） === */
+    .card {
+      background: var(--card); border-radius: 16px;
+      padding: clamp(20px, 2.6vw, 30px);
+      border: 1px solid rgba(41, 38, 38, 0.07);
+      border-bottom: 4px solid var(--yellow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -20px rgba(41, 38, 38, 0.28); }
+    .card .k { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); }
+    .card b.t { display: block; font-family: var(--serif); font-weight: 900; font-size: 1.05rem; margin: 6px 0 6px; color: var(--ink); }
+    .card .d { font-size: 0.88rem; color: var(--ink-light); line-height: 1.7; }
+
+    /* === 复盘六格（组件10：编号卡片） === */
+    .recap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+    .recap .cell {
+      background: var(--card); border-radius: 12px; padding: 16px 18px;
+      border-left: 3px solid var(--yellow);
+    }
+    .recap .cell b {
+      display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--blue); margin-bottom: 4px;
+    }
+    .recap .cell span { font-size: 0.86rem; color: var(--ink-light); line-height: 1.65; }
+
+    /* === 流程步骤条 === */
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .flow .s {
+      font-size: 13px; font-weight: 700; color: var(--blue-deep);
+      background: var(--yellow-soft); border: 1px solid rgba(201, 151, 63, 0.4);
+      padding: 6px 14px; border-radius: 999px;
+    }
+    .flow .ar { color: var(--ink-faint); font-weight: 700; }
+
+    /* === 键值行（无默认样式，全部定制） === */
+    .kv { display: grid; gap: 14px; }
+    .kv .line { display: flex; gap: 14px; font-size: 0.94rem; line-height: 1.7; }
+    .kv .line b { flex: 0 0 76px; font-family: var(--serif); font-weight: 900; color: var(--blue); }
+    .kv .line span { color: var(--ink-light); }
+
+    /* === Scroll Reveal === */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ============ HERO（布局：双栏 + 照片拼贴） ============ */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: grid; grid-template-columns: 1.05fr 0.95fr;
+      align-items: center; gap: clamp(32px, 5vw, 72px);
+      padding: clamp(110px, 16vh, 150px) clamp(20px, 4vw, 48px) clamp(56px, 8vh, 80px);
+      max-width: 1200px; margin: 0 auto;
+    }
+    .hero::before {
+      content: ""; position: absolute; right: 4%; top: 12%;
+      width: clamp(240px, 30vw, 420px); height: clamp(240px, 30vw, 420px);
+      border: 2px dashed rgba(201, 151, 63, 0.30); border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-family: var(--serif); font-weight: 900;
+      font-size: clamp(2.9rem, 7vw, 5.2rem); line-height: 1.12; color: var(--ink);
+    }
+    .hero h1 em { font-family: var(--disp); font-style: italic; font-weight: 400; color: var(--yellow); }
+    .hero .sub {
+      font-family: var(--serif); font-weight: 700;
+      font-size: clamp(1.05rem, 2vw, 1.4rem); margin-top: 18px; color: var(--ink);
+    }
+    .hero .desc { margin-top: 14px; font-size: 0.95rem; color: var(--ink-light); max-width: 540px; }
+    .hero .tagrow { margin-top: 22px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .hero-stats .stat {
+      background: var(--card); border: 1px solid rgba(41, 38, 38, 0.09);
+      border-radius: 12px; padding: 10px 18px;
+    }
+    .hero-stats .stat b { display: block; font-family: var(--disp); font-size: 1.15rem; font-weight: 600; color: var(--blue-deep); line-height: 1.3; }
+    .hero-stats .stat span { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-faint); }
+    .hero-collage { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto; gap: 16px; }
+    .hero-collage .p1 { grid-row: 1 / 3; }
+    .hero-collage .p1 img { aspect-ratio: 3/4; }
+    .hero-collage .p2 img, .hero-collage .p3 img { aspect-ratio: 4/3; }
+    .scrollhint {
+      position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+      font-size: 11px; letter-spacing: 0.22em; font-weight: 500; color: var(--ink-faint);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .scrollhint i { width: 5px; height: 5px; border-radius: 50%; background: var(--yellow); animation: bd 1.6s ease-in-out infinite; }
+    @keyframes bd { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(5px); opacity: 0.4; } }
+
+    /* ============ K1 个人简介（布局：左主档案 + 右荣誉卡堆） ============ */
+    .k1-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; align-items: start; }
+    .k1-left { background: var(--card); border-radius: 20px; padding: clamp(24px, 3vw, 40px); border-top: 4px solid var(--blue); }
+    .k1-right { display: grid; gap: 16px; }
+    .k1-right .card { border-bottom-color: var(--gold); }
+    .k1-note { margin-top: 20px; padding: 14px 18px; background: var(--yellow-soft); border-radius: 12px; font-size: 0.88rem; color: var(--ink-light); border: 1px dashed rgba(201, 151, 63, 0.5); }
+
+    /* ============ K2 竞赛获奖（布局：杂志大图左 + 奖项卡右） ============ */
+    .k2-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
+    .k2-grid .photo img { max-height: 460px; width: 100%; object-fit: cover; }
+    .k2-right { display: grid; gap: 16px; }
+    .k2-right .card:nth-child(1) { border-bottom-color: var(--gold); }
+    .k2-right .card:nth-child(2) { border-bottom-color: var(--red); }
+
+    /* ============ K3 绘画工作台（布局：文案左 + 大图右，下方三联图） ============ */
+    .k3-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 32px; align-items: center; }
+    .k3-grid .photo img { max-height: 420px; object-position: top center; }
+    .k3-note { background: var(--card); border-radius: 14px; padding: 18px 22px; border-left: 3px solid var(--red); font-size: 0.92rem; color: var(--ink-light); }
+    .k3-note + .k3-note { margin-top: 12px; border-left-color: var(--yellow); }
+    .k3-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+    .k3-strip .photo img { height: clamp(140px, 22vw, 220px); object-fit: cover; }
+
+    /* ============ K4 说明书（布局：四联大图 + 复盘格） ============ */
+    .k4-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .k4-grid .photo img { aspect-ratio: 3/4; object-fit: cover; }
+
+    /* ============ K5 洞察报告（布局：全宽引用 + 图文三步） ============ */
+    .quote-big {
+      position: relative; margin-bottom: 40px; padding: clamp(24px, 4vw, 48px) clamp(24px, 5vw, 64px);
+      background: var(--card); border-radius: 20px; border: 1px solid rgba(41, 38, 38, 0.07);
+      box-shadow: 0 28px 56px -32px rgba(41, 38, 38, 0.3);
+    }
+    .quote-big::before {
+      content: "\201C"; position: absolute; top: -28px; left: 24px;
+      font-family: var(--disp); font-style: italic; font-size: 5.5rem; line-height: 1;
+      color: var(--yellow); opacity: 0.9;
+    }
+    .quote-big .qt { font-family: var(--serif); font-weight: 900; font-size: clamp(1.25rem, 2.6vw, 1.8rem); line-height: 1.6; color: var(--ink); }
+    .quote-big .qs { margin-top: 12px; font-size: 0.8rem; letter-spacing: 0.14em; color: var(--ink-faint); }
+    .k5-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 32px; align-items: start; }
+    .k5-grid .photo img { aspect-ratio: 3/4; object-fit: cover; max-height: 440px; }
+    .k5-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 4px; }
+    .k5-steps .card { border-bottom-color: var(--red); padding: 18px; }
+    .k5-steps .card b.t { font-size: 0.95rem; }
+
+    /* ============ K6 招新物料（布局：全宽深色面板） ============ */
+    .k6-panel { background: var(--dark-panel); color: #EDE6DA; }
+    .k6-panel .section-title { color: #F6F0E4; }
+    .k6-panel .section-number { color: var(--gold); opacity: 1; }
+    .k6-panel .section-sub { color: rgba(237, 230, 218, 0.7); }
+    .k6-panel .deco-num { color: var(--gold); opacity: 0.08; }
+    .k6-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 32px; align-items: start; }
+    .k6-cover {
+      background: #4A3D31; border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(237, 230, 218, 0.14);
+      box-shadow: 0 32px 64px -28px rgba(0, 0, 0, 0.6);
+    }
+    .k6-cover img { width: 100%; aspect-ratio: 21/9; object-fit: cover; }
+    .k6-cover .cap { padding: 10px 16px; font-size: 12px; letter-spacing: 0.1em; color: rgba(237, 230, 218, 0.75); }
+    .k6-posters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+    .k6-posters .ph { background: #4A3D31; border-radius: 10px; overflow: hidden; border: 1px solid rgba(237, 230, 218, 0.12); }
+    .k6-posters .ph img { width: 100%; height: clamp(96px, 14vw, 150px); object-fit: cover; }
+    .k6-right { display: grid; gap: 16px; }
+    .k6-right .chip { background: rgba(251, 247, 238, 0.08); border-color: rgba(237, 230, 218, 0.25); color: #EDE6DA; }
+    .k6-right .note-p {
+      background: rgba(251, 247, 238, 0.06); border: 1px solid rgba(237, 230, 218, 0.14);
+      border-radius: 14px; padding: 16px 20px; font-size: 0.9rem; color: rgba(237, 230, 218, 0.85); line-height: 1.75;
+    }
+    .k6-right .btn { background: var(--gold); color: var(--ink); }
+    .k6-right .btn--paper { background: transparent; color: #EDE6DA; border: 1.5px solid rgba(237, 230, 218, 0.4); box-shadow: none; }
+    .k6-right .btn--paper:hover { border-color: var(--gold); color: var(--gold); }
+    .k6-right .linkcol { display: grid; gap: 12px; }
+    .k6-right .url-note {
+      font-size: 10px; line-height: 1.6; color: rgba(237, 230, 218, 0.5);
+      font-family: 'Fira Code', Consolas, monospace; word-break: break-all; user-select: text;
+    }
+    .k6-panel .recap .cell { background: rgba(251, 247, 238, 0.06); border-left-color: var(--gold); }
+    .k6-panel .recap .cell b { color: var(--gold); }
+    .k6-panel .recap .cell span { color: rgba(237, 230, 218, 0.78); }
+
+    /* ============ K7 岗位分析（布局：三列对比卡 + 流程） ============ */
+    .k7-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .k7-grid .card:nth-child(1) { border-bottom-color: var(--gold); }
+    .k7-grid .card:nth-child(2) { border-bottom-color: var(--blue); }
+    .k7-grid .card:nth-child(3) { border-bottom-color: var(--red); }
+    .k7-flow {
+      margin-top: 22px; background: var(--card); border-radius: 16px;
+      padding: clamp(20px, 2.6vw, 28px); border: 1px solid rgba(41, 38, 38, 0.07);
+    }
+    .k7-flow .fk { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .k7-flow .fnote { margin-top: 14px; font-size: 0.88rem; color: var(--ink-light); }
+
+    /* ============ K8 能力成长（布局：六宫格） ============ */
+    .k8-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .k8-grid .card:nth-child(3n+1) { border-bottom-color: var(--blue); }
+    .k8-grid .card:nth-child(3n+2) { border-bottom-color: var(--gold); }
+    .k8-grid .card:nth-child(3n) { border-bottom-color: var(--red); }
+
+    /* ============ K9 收尾（布局：非对称 CTA） ============ */
+    .k9-wrap { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: start; }
+    .k9-big {
+      font-family: var(--serif); font-weight: 900;
+      font-size: clamp(2rem, 4.6vw, 3.4rem); line-height: 1.3; color: var(--ink);
+    }
+    .k9-big em { font-family: var(--disp); font-style: italic; font-weight: 400; color: var(--yellow); }
+    .k9-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .k9-materials {
+      background: var(--card); border-radius: 18px; padding: clamp(20px, 2.6vw, 30px);
+      border: 1px solid rgba(41, 38, 38, 0.07); border-top: 4px solid var(--gold);
+    }
+    .k9-materials .mk { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+    .k9-materials ul { list-style: none; display: grid; gap: 10px; }
+    .k9-materials li a {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+      font-size: 0.92rem; font-weight: 500; color: var(--ink-light);
+      padding: 10px 14px; border-radius: 10px; background: var(--cream);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .k9-materials li a:hover { background: var(--yellow-soft); color: var(--blue-deep); }
+    .k9-materials li a .u { font-size: 10px; color: var(--ink-faint); font-family: 'Fira Code', Consolas, monospace; word-break: break-all; max-width: 46%; }
+    .k9-credit { margin-top: 18px; font-size: 0.8rem; color: var(--ink-faint); line-height: 1.8; }
+    .k9-quote { margin-top: 22px; padding-left: 16px; border-left: 3px solid var(--yellow); font-family: var(--serif); font-weight: 700; font-size: 0.95rem; color: var(--ink-light); }
+
+    /* ============ 页脚 ============ */
+    .footer {
+      border-top: 1px solid rgba(41, 38, 38, 0.1);
+      padding: clamp(28px, 5vh, 48px) 0; text-align: center;
+    }
+    .footer p { font-size: 0.82rem; color: var(--ink-faint); line-height: 1.9; }
+    .footer .credit a { color: var(--blue); border-bottom: 1px dashed var(--yellow); }
+
+    /* ============ 响应式 ============ */
+    @media (max-width: 1020px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 120px; }
+      .hero-collage { max-width: 560px; }
+      .k1-grid, .k2-grid, .k5-grid, .k6-grid, .k9-wrap { grid-template-columns: 1fr; }
+      .k3-grid { grid-template-columns: 1fr; }
+      .k4-grid { grid-template-columns: repeat(2, 1fr); }
+      .k7-grid, .k8-grid, .k5-steps { grid-template-columns: 1fr; }
+      .recap { grid-template-columns: repeat(2, 1fr); }
+      .k6-posters { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .topnav { padding: 10px 16px; }
+      .topnav .nm small { display: none; }
+      .topnav nav a { padding: 5px 8px; font-size: 11px; }
+      .k4-grid { grid-template-columns: 1fr 1fr; }
+      .recap { grid-template-columns: 1fr; }
+      .k6-posters { grid-template-columns: repeat(2, 1fr); }
+      .k9-materials li a { flex-direction: column; gap: 2px; }
+      .k9-materials li a .u { max-width: 100%; }
+      .deco-num { font-size: 4.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== 顶部导航 ====== -->
+  <header class="topnav">
+    <div class="nm">李雅洁<small>BEICHEN · GROUP 15</small></div>
+    <nav>
+      <a href="#k1">简介</a>
+      <a href="#k2">竞赛</a>
+      <a href="#k3">工作台</a>
+      <a href="#k6">招新</a>
+      <a href="#k9">收尾</a>
+    </nav>
+  </header>
+
+  <!-- ====== HERO · 封面 ====== -->
+  <section class="hero" id="h">
+    <div class="hero-text">
+      <span class="label-caps">BEICHEN · GROUP 15 · 2026</span>
+      <h1>个人<br>作品集<em>.</em></h1>
+      <div class="sub">北辰青年校园团队第15组 · 李雅洁</div>
+      <p class="desc">覆盖 W1–W3：说明书 / 洞察 / 招新 / 岗位分析，每件按「任务 → 角色 → AI 参与 → 我的判断 → 成果 → 再做一次」复盘。</p>
+      <div class="tagrow">
+        <span class="chip chip--gold">内容策划</span><span class="chip chip--gold">视觉设计</span><span class="chip chip--gold">技术执行</span><span class="chip">AI 协作</span><span class="chip">自我驱动</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>W1–W3</b><span>四周实习</span></div>
+        <div class="stat"><b>4 类</b><span>交付作品</span></div>
+        <div class="stat"><b>1 套</b><span>人机协作方法</span></div>
+      </div>
+    </div>
+    <div class="hero-collage">
+      <figure class="photo p1 reveal reveal-d1">
+        <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295511519355.png" alt="证件照">
+        <figcaption>李雅洁</figcaption>
+      </figure>
+      <figure class="photo p2 reveal reveal-d2">
+        <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295520788506.jpg" alt="自拍 1">
+        <figcaption>日常 · 一</figcaption>
+      </figure>
+      <figure class="photo p3 reveal reveal-d3">
+        <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295520788538.jpg" alt="自拍 2">
+        <figcaption>日常 · 二</figcaption>
+      </figure>
+    </div>
+    <span class="scrollhint"><span>往下翻这本册子</span><i></i></span>
+  </section>
+
+  <!-- ====== 01 个人简介 · 成绩荣誉（布局：主档案 + 荣誉卡堆） ====== -->
+  <section class="section" id="k1">
+    <span class="deco-num" aria-hidden="true">01</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">01 / Profile</span>
+        <h2 class="section-title">个人简介 · 成绩荣誉</h2>
+        <p class="section-sub">淮南师范学院 · 通信工程 · 大四</p>
+      </div>
+      <div class="k1-grid">
+        <div class="k1-left reveal reveal-d1">
+          <div class="kv">
+            <div class="line"><b>学校专业</b><span>淮南师范学院 · 通信工程（2023 级，大四）</span></div>
+            <div class="line"><b>GPA</b><span>3.91 / 4.5（专业前 5%）</span></div>
+            <div class="line"><b>核心课程</b><span>专业第 1 / 49</span></div>
+            <div class="line"><b>做事方式</b><span>先看方案再执行；方向、取舍与验证自己把关，AI 负责执行提速</span></div>
+          </div>
+          <div class="k1-note">判断：AI 负责执行提速，方向与验证自己把关——这也是整本作品集的工作方式。</div>
+        </div>
+        <div class="k1-right">
+          <div class="card reveal reveal-d2">
+            <span class="k">荣誉</span>
+            <div class="tagrow" style="margin-top:10px">
+              <span class="chip chip--gold">国家励志奖学金</span>
+              <span class="chip chip--gold">校一等奖学金</span>
+              <span class="chip chip--gold">优秀学生标兵</span>
+            </div>
+          </div>
+          <div class="card reveal reveal-d3">
+            <span class="k">北辰角色</span>
+            <b class="t">内容策划 / 视觉设计 / 技术执行</b>
+            <p class="d">四周线上实习（2026.08–09）· 北辰青年校园团队第15组</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 02 竞赛与获奖（布局：杂志大图 + 奖项卡） ====== -->
+  <section class="section section--alt" id="k2">
+    <span class="deco-num" aria-hidden="true">02</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">02 / Awards</span>
+        <h2 class="section-title">竞赛与获奖</h2>
+        <p class="section-sub">学科竞赛 · 真实经历</p>
+      </div>
+      <div class="k2-grid">
+        <figure class="photo reveal reveal-d1">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295518891051.jpg" alt="获奖证书">
+          <figcaption>获奖证书 · 学科竞赛（合并图）</figcaption>
+        </figure>
+        <div class="k2-right">
+          <div class="card reveal reveal-d2">
+            <span class="k">Award 01</span>
+            <b class="t">北斗杯 · 省级二等奖</b>
+            <div class="tagrow" style="margin:6px 0 8px">
+              <span class="chip">团队负责人</span><span class="chip">原创预警方案</span>
+            </div>
+            <p class="d">构想「北斗高精度定位 × 交通事故预警」，负责预警模型、申报与答辩。</p>
+          </div>
+          <div class="card reveal reveal-d3">
+            <span class="k">Award 02</span>
+            <b class="t">环境监测机器人 · 省级三等奖</b>
+            <div class="tagrow" style="margin:6px 0 8px">
+              <span class="chip">核心成员</span><span class="chip">传感器 · 算法</span>
+            </div>
+            <p class="d">多传感器信息融合；负责传感器筛选、设备调试与算法优化。</p>
+          </div>
+          <div class="card reveal reveal-d4" style="border-bottom-style:dashed">
+            <span class="k" style="color:#8A6D00">进行中</span>
+            <b class="t">实训项目</b>
+            <p class="d"><span class="chip chip--wip">进行中 · 成果待补充</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 03 我的绘画工作台（布局：文案左 + 大图右 + 三联图） ====== -->
+  <section class="section" id="k3">
+    <span class="deco-num" aria-hidden="true">03</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">03 / Workbench</span>
+        <h2 class="section-title">我的绘画工作台</h2>
+        <p class="section-sub">个人项目 · 计时打卡 + 统计图表</p>
+      </div>
+      <div class="k3-grid">
+        <div>
+          <div class="k3-note reveal reveal-d1">每天 4–5 小时板绘，用数据管理练习：IndexedDB 本地存储，近 7 天趋势图表。</div>
+          <div class="tagrow reveal reveal-d2" style="margin:14px 0">
+            <span class="chip chip--wip">待部署</span><span class="chip chip--olive">独立完成 · 需求/设计/实现</span><span class="chip chip--olive">数据管理</span>
+          </div>
+          <div class="k3-note reveal reveal-d3">判断：先解决自己的真实问题，本地优先；如果再做，加云端同步与导出。</div>
+        </div>
+        <figure class="photo reveal reveal-d2">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295624164427.png" alt="工作台主界面">
+          <figcaption>工作台主界面</figcaption>
+        </figure>
+      </div>
+      <div class="k3-strip">
+        <figure class="photo reveal reveal-d1">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295624164443.png" alt="记录统计页">
+          <figcaption>记录 · 统计</figcaption>
+        </figure>
+        <figure class="photo reveal reveal-d2">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636109354.png" alt="展示台页">
+          <figcaption>展示台</figcaption>
+        </figure>
+        <figure class="photo reveal reveal-d3">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295518892043.png" alt="我的画作">
+          <figcaption>我的画作</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 04 W1 AI 个人说明书（布局：四联大图 + 复盘格） ====== -->
+  <section class="section section--alt" id="k4">
+    <span class="deco-num" aria-hidden="true">04</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">04 / W1 · Manual</span>
+        <h2 class="section-title">AI 个人说明书</h2>
+        <p class="section-sub">W1 · 让团队更懂怎么和我协作</p>
+      </div>
+      <div class="k4-grid">
+        <figure class="photo reveal reveal-d1">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636109370.png" alt="说明书 1">
+          <figcaption>01</figcaption>
+        </figure>
+        <figure class="photo reveal reveal-d2">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636110346.png" alt="说明书 2">
+          <figcaption>02</figcaption>
+        </figure>
+        <figure class="photo reveal reveal-d3">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295624165483.png" alt="说明书 3">
+          <figcaption>03</figcaption>
+        </figure>
+        <figure class="photo reveal reveal-d4">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636110362.png" alt="说明书 4">
+          <figcaption>04</figcaption>
+        </figure>
+      </div>
+      <div class="recap">
+        <div class="cell reveal reveal-d1"><b>任务</b><span>入职第一周，从零建个人档案，让团队更懂怎么和我协作</span></div>
+        <div class="cell reveal reveal-d2"><b>角色</b><span>提供"真实的自己"：事实 / 目标 / 偏好分开记录</span></div>
+        <div class="cell reveal reveal-d3"><b>AI 参与</b><span>梳理结构、提炼要点，沉淀成 Obsidian 三层知识库</span></div>
+        <div class="cell reveal reveal-d4"><b>我的判断</b><span>只写真话、不写理想人设；先分清事实/目标/偏好</span></div>
+        <div class="cell reveal reveal-d5"><b>最终成果</b><span>个人档案一份 → Raw / Wiki / Outputs 知识库，持续更新</span></div>
+        <div class="cell reveal reveal-d5"><b>再做一次</b><span>把档案做成可复用模板，自我介绍更快</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 05 W2 洞察报告（布局：全宽大引用 + 图文三步） ====== -->
+  <section class="section" id="k5">
+    <span class="deco-num" aria-hidden="true">05</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">05 / W2 · Insight</span>
+        <h2 class="section-title">洞察报告 · 奥德赛时期</h2>
+        <p class="section-sub">W2 · 群体洞察 · 成稿为主（节选 900 字成稿）</p>
+      </div>
+      <div class="quote-big reveal reveal-d1">
+        <p class="qt">奥德修斯在海上漂了十年，才找到回家的路——我们二十几岁的迷茫，大概也是这么一回事。</p>
+        <p class="qs">《二十几岁的迷茫，其实叫奥德赛时期》 · 开头（原文）</p>
+      </div>
+      <div class="k5-grid">
+        <figure class="photo reveal reveal-d2">
+          <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295624166539.png" alt="奥德赛封面">
+          <figcaption>图文封面 1/1 · 900 字公众号体成稿</figcaption>
+        </figure>
+        <div>
+          <div class="k5-steps">
+            <div class="card reveal reveal-d1"><span class="k">方法 ①</span><b class="t">把漂着变成任务</b><p class="d">列探索清单，主动去试，用试错排除选项</p></div>
+            <div class="card reveal reveal-d2"><span class="k">方法 ②</span><b class="t">最小行动代替空想</b><p class="d">把目标砍到小得不好意思不做，先动起来</p></div>
+            <div class="card reveal reveal-d3"><span class="k">方法 ③</span><b class="t">把经历变成资产</b><p class="d">每周复盘三问，把弯路存成人生实验记录</p></div>
+          </div>
+          <div class="k3-note reveal reveal-d4" style="margin-top:16px">
+            <b style="font-weight:900">金句</b> · 奥德赛时期不是人生的停滞期，是人生的铺垫期。
+          </div>
+        </div>
+      </div>
+      <div class="recap">
+        <div class="cell reveal reveal-d1"><b>任务</b><span>W2 群体洞察：写一篇有洞察、读得下去的公众号长文</span></div>
+        <div class="cell reveal reveal-d2"><b>角色</b><span>以亲身"漂过"经历为底，做选题、定观点、逐句终稿</span></div>
+        <div class="cell reveal reveal-d3"><b>AI 参与</b><span>给结构建议、润色、检查"AI 痕迹"，我逐句验收</span></div>
+        <div class="cell reveal reveal-d4"><b>我的判断</b><span>洞察 = 数据 + 亲身经验；不用华丽词堆砌</span></div>
+        <div class="cell reveal reveal-d5"><b>最终成果</b><span>约 900 字成稿《二十几岁的迷茫，其实叫奥德赛时期》</span></div>
+        <div class="cell reveal reveal-d5"><b>再做一次</b><span>先做 2–3 人真实访谈，让案例更扎实</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 06 W2 校园招新物料（布局：全宽深色面板） ====== -->
+  <section class="section k6-panel" id="k6">
+    <span class="deco-num" aria-hidden="true">06</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">06 / W2 · Recruit</span>
+        <h2 class="section-title">校园招新物料</h2>
+        <p class="section-sub">W2 · 内容 → 视觉 → 前端 → 部署 · 一人全链路</p>
+      </div>
+      <div class="k6-grid">
+        <div>
+          <div class="k6-cover reveal reveal-d1">
+            <img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295629974601.png" alt="招新封面 21:9">
+            <div class="cap">13 章推文 · 10 张海报 · 阅读器已上线</div>
+          </div>
+          <div class="k6-posters">
+            <div class="ph reveal reveal-d2"><img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636110394.png" alt="海报 02"></div>
+            <div class="ph reveal reveal-d3"><img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295792453690.png" alt="海报 04"></div>
+            <div class="ph reveal reveal-d4"><img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295636111386.png" alt="海报 06"></div>
+            <div class="ph reveal reveal-d5"><img src="/spark/app/app_17dcdy9b51m/runtime/api/v1/storage/object/bucket_aadktdiqsiybu/1875295792454746.png" alt="海报 11"></div>
+          </div>
+        </div>
+        <div class="k6-right">
+          <div class="tagrow reveal reveal-d1">
+            <span class="chip">叙事线·彼得潘</span><span class="chip">海洋蓝 5 色阶</span><span class="chip">WCAG AA</span>
+            <span class="chip">删冲突导航卡</span><span class="chip">丢图逐层排查</span><span class="chip">像素级校对</span>
+          </div>
+          <p class="note-p reveal reveal-d2">9 个关键判断点：AI 给选项，我定叙事与审美，逐项验收可读性 / 色彩冲突 / 资源完整性。</p>
+          <div class="linkcol reveal reveal-d3">
+            <a class="btn" href="https://75a637a723e04761bf468efa143362bd.app.workbuddy.link" target="_blank" rel="noopener">阅读器 v2（金色版）↗</a>
+            <span class="url-note">https://75a637a723e04761bf468efa143362bd.app.workbuddy.link</span>
+            <a class="btn btn--paper" href="https://38ad7a61b0624a93a78e0223e7c55375.app.workbuddy.link" target="_blank" rel="noopener">项目总结报告 ↗</a>
+            <span class="url-note">https://38ad7a61b0624a93a78e0223e7c55375.app.workbuddy.link</span>
+          </div>
+        </div>
+      </div>
+      <div class="recap">
+        <div class="cell reveal reveal-d1"><b>任务</b><span>给招新做一套"能上线"的物料，不止交文档</span></div>
+        <div class="cell reveal reveal-d2"><b>角色</b><span>内容策划 / 视觉设计 / 技术执行，一人全链路</span></div>
+        <div class="cell reveal reveal-d3"><b>AI 参与</b><span>多版文案、10 海报渲染、公众号排版、阅读器开发与部署</span></div>
+        <div class="cell reveal reveal-d4"><b>我的判断</b><span>先定故事线再动手；9 个关键点逐项验收</span></div>
+        <div class="cell reveal reveal-d5"><b>最终成果</b><span>13 章推文 + 10 海报 + 阅读器上线（链接可点）</span></div>
+        <div class="cell reveal reveal-d5"><b>再做一次</b><span>启动先 15 分钟对齐叙事/配色/工具，拆任务分工</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 07 W3 岗位分析与面试复盘（布局：三列对比卡 + 流程条） ====== -->
+  <section class="section" id="k7">
+    <span class="deco-num" aria-hidden="true">07</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">07 / W3 · Interview</span>
+        <h2 class="section-title">岗位分析与面试复盘</h2>
+        <p class="section-sub">W3 · 担任面试官 · 自建 Skill · 3 轮迭代</p>
+      </div>
+      <div class="k7-grid">
+        <div class="card reveal reveal-d1">
+          <span class="k">岗位一</span>
+          <b class="t">产品数据实习生</b>
+          <p class="d">匹配：Excel/Python 分析、可视化、指标意识；弱项：SQL/埋点 → 简历写"可快速上手"</p>
+        </div>
+        <div class="card reveal reveal-d2">
+          <span class="k">岗位二 · 主推</span>
+          <b class="t">产品 GTM 实习生</b>
+          <p class="d">匹配最高：完整 GTM 案例（洞察→价值→物料→演示→复盘），作为主推方向</p>
+        </div>
+        <div class="card reveal reveal-d3">
+          <span class="k">岗位三</span>
+          <b class="t">视觉算法工程师</b>
+          <p class="d">匹配较低：缺 OpenCV/PyTorch；以机器人+信号处理底子作冲刺项</p>
+        </div>
+      </div>
+      <div class="k7-flow reveal reveal-d2">
+        <div class="fk">自建 Skill · job-interview-prep</div>
+        <div class="flow">
+          <span class="s">岗位分析</span><span class="ar">→</span>
+          <span class="s">经历匹配</span><span class="ar">→</span>
+          <span class="s">材料优化</span><span class="ar">→</span>
+          <span class="s">模拟面试</span>
+        </div>
+        <p class="fnote">面试官五维复盘 · 两轮模拟 + 真实面试官实践后 3 轮迭代 · 亮点：诚实面对缺口 + AI 边界话术（"代码由 AI 生成，方案与验证是我的"）</p>
+      </div>
+      <div class="recap">
+        <div class="cell reveal reveal-d1"><b>任务</b><span>W3：把求职准备做成可复用、可迭代的工作流</span></div>
+        <div class="cell reveal reveal-d2"><b>角色</b><span>定义四阶段流程与五维复盘框架；只填真实经历</span></div>
+        <div class="cell reveal reveal-d3"><b>AI 参与</b><span>岗位分析草稿、两轮模拟面试逐题点评、素材真实性检查</span></div>
+        <div class="cell reveal reveal-d4"><b>我的判断</b><span>诚实标注能力缺口；不虚构经历、不美化短板</span></div>
+        <div class="cell reveal reveal-d5"><b>最终成果</b><span>job-interview-prep Skill + 岗位分析 + 复盘 3 轮</span></div>
+        <div class="cell reveal reveal-d5"><b>再做一次</b><span>沉淀成公开模板前先脱敏，多存真实面试记录</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 08 AI 能力成长轨迹（布局：六宫格） ====== -->
+  <section class="section section--alt" id="k8">
+    <span class="deco-num" aria-hidden="true">08</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">08 / Skills</span>
+        <h2 class="section-title">AI 能力成长轨迹</h2>
+        <p class="section-sub">我掌握 / 正在形成的 AI Skill · 解决什么真实问题</p>
+      </div>
+      <div class="k8-grid">
+        <div class="card reveal reveal-d1">
+          <span class="k">方法论</span>
+          <b class="t">人机协作方法论</b>
+          <p class="d">AI 给选项、我拍板——解决"怎么用 AI 做真事" · 已形成方法</p>
+        </div>
+        <div class="card reveal reveal-d2">
+          <span class="k">创作</span>
+          <b class="t">内容创作与视觉</b>
+          <p class="d">guizang / gzh-design——从文案到海报与公众号排版 · 可独立完成</p>
+        </div>
+        <div class="card reveal reveal-d3">
+          <span class="k">工程</span>
+          <b class="t">前端工程</b>
+          <p class="d">阅读器 / 绘画工作台——把想法做成可点开的作品 · 入门/进行中</p>
+        </div>
+        <div class="card reveal reveal-d1">
+          <span class="k">知识</span>
+          <b class="t">知识管理</b>
+          <p class="d">Obsidian 三层知识库——解决"信息散、不沉淀" · 日常使用中</p>
+        </div>
+        <div class="card reveal reveal-d2">
+          <span class="k">数据</span>
+          <b class="t">数据分析</b>
+          <p class="d">Excel + Python + 图表——用数据记录练习、看趋势 · 入门</p>
+        </div>
+        <div class="card reveal reveal-d3">
+          <span class="k">求职</span>
+          <b class="t">求职体系</b>
+          <p class="d">自建 job-interview-prep——岗位分析到面试的准备 · 3 轮迭代</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 09 收尾（布局：非对称 CTA） ====== -->
+  <section class="section" id="k9">
+    <span class="deco-num" aria-hidden="true">09</span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-number">09 / Links</span>
+        <h2 class="section-title">谢谢看完</h2>
+      </div>
+      <div class="k9-wrap">
+        <div>
+          <p class="k9-big reveal reveal-d1">这是我的四周<em>,</em><br>也是我的作品<em>.</em></p>
+          <p class="section-sub reveal reveal-d2" style="margin-top:16px">可点开（新窗口 ↗ · 被拦截就复制网址）</p>
+          <div class="k9-links reveal reveal-d3">
+            <a class="btn" href="https://75a637a723e04761bf468efa143362bd.app.workbuddy.link" target="_blank" rel="noopener">招新阅读器 v2（金色版）↗</a>
+            <a class="btn btn--paper" href="https://38ad7a61b0624a93a78e0223e7c55375.app.workbuddy.link" target="_blank" rel="noopener">招新项目总结报告 ↗</a>
+          </div>
+          <p class="k9-quote reveal reveal-d4">这份作业作品集本身，也是用同一套「人机协作」流程做出来的——方向与判断是我的，AI 负责执行。</p>
+          <p class="k9-credit reveal reveal-d4">李雅洁 · 北辰青年校园团队第15组 · 通信工程<br>BEICHEN YOUTH · GROUP 15 · 四周 AI 作品集</p>
+        </div>
+        <div class="k9-materials reveal reveal-d2">
+          <div class="mk">作业提交材料（飞书，可点开）</div>
+          <ul>
+            <li><a href="https://my.feishu.cn/docx/R1KldCt6toT6oIx4bmrcSMdLnQf" target="_blank" rel="noopener">材料1 · W1 个人说明书 ↗<span class="u">my.feishu.cn/docx/R1KldCt6toT6oIx4bmrcSMdLnQf</span></a></li>
+            <li><a href="https://my.feishu.cn/wiki/T7a1wA7m3iuUkikMpqqcaLUlnIf" target="_blank" rel="noopener">材料2 · 招新公众号个人复盘 ↗<span class="u">my.feishu.cn/wiki/T7a1wA7m3iuUkikMpqqcaLUlnIf</span></a></li>
+            <li><a href="https://my.feishu.cn/docx/SLfZdWT9wopbT1x76fRceKSJnrh" target="_blank" rel="noopener">材料3 · 岗位分析 ↗<span class="u">my.feishu.cn/docx/SLfZdWT9wopbT1x76fRceKSJnrh</span></a></li>
+            <li><a href="https://my.feishu.cn/docx/ApJ0dlT6no2MCWxRfbtcGSVPnbc" target="_blank" rel="noopener">材料4 · 个人面试记录 ↗<span class="u">my.feishu.cn/docx/ApJ0dlT6no2MCWxRfbtcGSVPnbc</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 页脚（含规范署名） ====== -->
+  <footer class="footer">
+    <div class="container">
+      <p>李雅洁 · 北辰青年校园团队第15组 · 2026</p>
+      <p class="credit">视觉规范基于 <a href="https://github.com/esthersjw/esther-design-system" target="_blank" rel="noopener">ESTHER不二 esther-design-system</a>（esthersjw）· CC BY-NC-SA 4.0 · 米色系定制配色</p>
+    </div>
+  </footer>
+
+  <!-- ====== Scroll Reveal JS ====== -->
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+  <!-- © ESTHER不二 esthersjw/esther-design-system CC BY-NC 4.0 -->
+  <section style="position:absolute;left:-9999px;font-size:0;line-height:0;opacity:0;height:0;overflow:hidden;">esthersjw-design-system</section>
+</body>
+</html>
